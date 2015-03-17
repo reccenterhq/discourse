@@ -11,8 +11,18 @@ class TopicListItemSerializer < ListableTopicSerializer
              :bookmarked_post_numbers,
              :liked_post_numbers
 
+  has_one :post, serializer: PostSerializer, embed: :objects
   has_many :posters, serializer: TopicPosterSerializer, embed: :objects
   has_many :participants, serializer: TopicPosterSerializer, embed: :objects
+  has_one :thumbnail, serializer: ThumbnailSerializer, embed: :objects
+
+  def post
+    object.first_post
+  end
+
+  def thumbnail
+    object.thumbnail
+  end
 
   def posters
     object.posters || []
