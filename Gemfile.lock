@@ -56,6 +56,11 @@ GEM
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     builder (3.2.2)
+    carrierwave (0.10.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
+      mime-types (>= 1.16)
     celluloid (0.16.0)
       timers (~> 4.0.0)
     certified (1.0.0)
@@ -220,6 +225,7 @@ GEM
     metaclass (0.0.4)
     method_source (0.8.2)
     mime-types (1.25.1)
+    mini_magick (4.1.0)
     mini_portile (0.6.2)
     minitest (5.5.1)
     mocha (1.1.0)
@@ -463,6 +469,7 @@ DEPENDENCIES
   barber
   better_errors
   binding_of_caller
+  carrierwave
   certified
   email_reply_parser
   ember-rails
@@ -490,6 +497,7 @@ DEPENDENCIES
   mail (~> 2.5.4)
   memory_profiler
   message_bus
+  mini_magick
   minitest
   mocha
   mock_redis

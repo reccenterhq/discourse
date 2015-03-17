@@ -208,7 +208,28 @@ class CookedPostProcessor
     if @post.post_number == 1
       img = images.first
       @post.topic.update_column(:image_url, img["src"]) if img["src"].present?
+      set_topic_thumbnail(img)
     end
+  end
+
+  def set_topic_thumbnail(img)
+    return unless img["src"].present?
+    topic = @post.topic
+
+    upload = Upload.get_from_url(img["src"])
+
+    external_copy = Discourse.store.download(upload) if Discourse.store.external?
+    original_path = if Discourse.store.external?
+      external_copy.try(:path)
+    else
+      Discourse.store.path_for(upload)
+    end
+
+    File.open(original_path) do |file|
+      topic.thumbnail = file
+    end
+
+    topic.save!
   end
 
   def post_process_oneboxes

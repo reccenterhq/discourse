@@ -104,6 +104,8 @@ class Topic < ActiveRecord::Base
 
   has_one :first_post, -> {where post_number: 1}, class_name: Post
 
+  mount_uploader :thumbnail, ThumbnailUploader
+
   # When we want to temporarily attach some data to a forum topic (usually before serialization)
   attr_accessor :user_data
   attr_accessor :posters  # TODO: can replace with posters_summary once we remove old list code

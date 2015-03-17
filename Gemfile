@@ -109,6 +109,9 @@ gem 'handlebars-source', '2.0.0'
 gem 'barber'
 gem 'babel-transpiler'
 
+gem 'carrierwave'
+gem 'mini_magick'
+
 gem 'message_bus'
 gem 'rails_multisite', path: 'vendor/gems/rails_multisite'
 
