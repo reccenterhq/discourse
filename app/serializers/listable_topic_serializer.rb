@@ -90,7 +90,7 @@ class ListableTopicSerializer < BasicTopicSerializer
   alias :include_new_posts? :has_user_data
 
   def include_excerpt?
-    pinned
+    true
   end
 
   def pinned
