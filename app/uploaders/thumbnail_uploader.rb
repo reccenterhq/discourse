@@ -30,9 +30,9 @@ class ThumbnailUploader < CarrierWave::Uploader::Base
   # 4. Square large (square): 677 x 677
   # 5. Square small (square-small): 340x340
   # 6. Small thumb square (thumbnail): 100 x 100
-  #
+
   version :feature do
-    process resize_to_fill: [747, 240]
+    process resize_to_fill: [747, 420]
   end
 
   version :large do
