@@ -9,15 +9,20 @@ class TopicListItemSerializer < ListableTopicSerializer
              :op_like_count,
              :pinned_globally,
              :bookmarked_post_numbers,
-             :liked_post_numbers
+             :liked_post_numbers,
+             :cooked,
+             :category
 
-  has_one :post, serializer: PostSerializer, embed: :objects
   has_many :posters, serializer: TopicPosterSerializer, embed: :objects
   has_many :participants, serializer: TopicPosterSerializer, embed: :objects
   has_one :thumbnail, serializer: ThumbnailSerializer, embed: :objects
 
-  def post
-    object.first_post
+  def cooked
+    object.first_post.try(:cooked)
+  end
+
+  def category
+    object.category.slug
   end
 
   def thumbnail
