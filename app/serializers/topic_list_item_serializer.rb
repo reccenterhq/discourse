@@ -11,7 +11,7 @@ class TopicListItemSerializer < ListableTopicSerializer
              :bookmarked_post_numbers,
              :liked_post_numbers,
              :cooked,
-             :category
+             :category_slug
 
   has_many :posters, serializer: TopicPosterSerializer, embed: :objects
   has_many :participants, serializer: TopicPosterSerializer, embed: :objects
@@ -21,7 +21,7 @@ class TopicListItemSerializer < ListableTopicSerializer
     object.first_post.try(:cooked)
   end
 
-  def category
+  def category_slug
     object.category.slug
   end
 

@@ -49,7 +49,23 @@ class TopicViewSerializer < ApplicationSerializer
              :expandable_first_post,
              :is_warning,
              :chunk_size,
-             :bookmarked
+             :bookmarked,
+             :cooked,
+             :category_slug
+
+  has_one :thumbnail, serializer: ThumbnailSerializer, embed: :objects
+
+  def cooked
+    object.topic.first_post.try(:cooked)
+  end
+
+  def category_slug
+    object.topic.category.slug
+  end
+
+  def thumbnail
+    object.topic.thumbnail
+  end
 
   # TODO: Split off into proper object / serializer
   def details
