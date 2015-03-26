@@ -55,6 +55,9 @@ class User < ActiveRecord::Base
   has_many :group_managers, dependent: :destroy
   has_many :managed_groups, through: :group_managers, source: :group
 
+  has_many :muted_user_records, class_name: 'MutedUser'
+  has_many :muted_users, through: :muted_user_records
+
   has_one :user_search_data, dependent: :destroy
   has_one :api_key, dependent: :destroy
 
@@ -308,8 +311,16 @@ class User < ActiveRecord::Base
     self.password_hash == hash_password(password, salt)
   end
 
+  def first_day_user?
+    !staff? &&
+    trust_level < TrustLevel[2] &&
+    created_at >= 24.hours.ago
+  end
+
   def new_user?
-    created_at >= 24.hours.ago || trust_level == TrustLevel[0]
+    (created_at >= 24.hours.ago || trust_level == TrustLevel[0]) &&
+      trust_level < TrustLevel[2] &&
+      !staff?
   end
 
   def seen_before?
@@ -555,10 +566,6 @@ class User < ActiveRecord::Base
 
   def has_uploaded_avatar
     uploaded_avatar.present?
-  end
-
-  def added_a_day_ago?
-    created_at > 1.day.ago
   end
 
   def generate_api_key(created_by)

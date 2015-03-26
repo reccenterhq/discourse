@@ -86,6 +86,14 @@ class PostAlerter
     # Make sure the user can see the post
     return unless Guardian.new(user).can_see?(post)
 
+    notifier_id = opts[:user_id] || post.user_id
+
+    # apply muting here
+    return if notifier_id && MutedUser.where(user_id: user.id, muted_user_id: notifier_id)
+                                      .joins(:muted_user)
+                                      .where('NOT admin AND NOT moderator')
+                                      .exists?
+
     # skip if muted on the topic
     return if TopicUser.get(post.topic, user).try(:notification_level) == TopicUser.notification_levels[:muted]
 
