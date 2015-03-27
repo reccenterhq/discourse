@@ -217,13 +217,7 @@ class CookedPostProcessor
     topic = @post.topic
 
     upload = Upload.get_from_url(img["src"])
-
-    external_copy = Discourse.store.download(upload) if Discourse.store.external?
-    original_path = if Discourse.store.external?
-      external_copy.try(:path)
-    else
-      Discourse.store.path_for(upload)
-    end
+    original_path = Discourse.store.path_for(upload)
 
     File.open(original_path) do |file|
       topic.thumbnail = file
