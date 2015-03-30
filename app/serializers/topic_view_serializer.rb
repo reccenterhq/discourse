@@ -51,7 +51,8 @@ class TopicViewSerializer < ApplicationSerializer
              :chunk_size,
              :bookmarked,
              :cooked,
-             :category_slug
+             :category_slug,
+             :image_url
 
   has_one :thumbnail, serializer: ThumbnailSerializer, embed: :objects
 
@@ -65,6 +66,10 @@ class TopicViewSerializer < ApplicationSerializer
 
   def thumbnail
     object.topic.thumbnail
+  end
+
+  def image_url
+    object.topic.image_url
   end
 
   # TODO: Split off into proper object / serializer
